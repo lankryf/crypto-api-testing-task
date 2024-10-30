@@ -58,7 +58,7 @@ class CryptoProfitAnalytics extends Command
         $this->info("Buying from {$buyPrice['name']} with price {$buyPrice['price']}");
         foreach ($sellPrices as $sellPrice) {
             $profit = $sellPrice['price'] - $buyPrice['price'];
-            $this->info("Selling in {$sellPrice['name']} with price {$sellPrice['price']} => profit $profit {$this->argument('outCurrency')}}");
+            $this->info("Selling in {$sellPrice['name']} with price {$sellPrice['price']} => profit $profit {$this->argument('outCurrency')}");
         }
     }
 }
