@@ -2,6 +2,7 @@
 
 namespace App\Services\CryptoPlatforms;
 
+use Illuminate\Support\Collection;
 use Exception;
 
 abstract class CryptoPlatformService
@@ -18,4 +19,9 @@ abstract class CryptoPlatformService
      * @return string
      */
     public abstract static function getPlatformName(): string;
+
+    /**
+     * @return Collection
+     */
+    public abstract static function getPairs(): Collection;
 }

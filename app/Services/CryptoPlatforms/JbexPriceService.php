@@ -3,6 +3,7 @@
 namespace App\Services\CryptoPlatforms;
 
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class JbexPriceService extends CryptoPlatformService
@@ -20,5 +21,16 @@ class JbexPriceService extends CryptoPlatformService
     public static function getPlatformName(): string
     {
         return 'jbex';
+    }
+
+    public static function getPairs(): Collection
+    {
+        $response = Http::get(
+            "https://api.jbex.com/openapi/quote/v1/ticker/price"
+        );
+        if ($response->successful()) {
+            return collect($response->json());
+        }
+        throw new Exception('Bad response from Jbex');
     }
 }
