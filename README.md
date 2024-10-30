@@ -14,7 +14,7 @@ Execute command you want. Command Examples:
 example out
 ```
 Max price = 71879.9 from jbex platform
-Min price = 71944.3 from bybit platform
+Min price = 71744.3 from bybit platform
 ```
 
 ## Crypto Profit Analytics
