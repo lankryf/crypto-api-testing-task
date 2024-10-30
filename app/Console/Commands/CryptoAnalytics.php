@@ -58,8 +58,8 @@ class CryptoAnalytics extends Command
             $this->argument('outCurrency')
         );
         $sortedPricesFromPlatforms = $prices->sortByDesc('price');
-        $min = $sortedPricesFromPlatforms->first();
-        $max = $sortedPricesFromPlatforms->last();
+        $max = $sortedPricesFromPlatforms->first();
+        $min = $sortedPricesFromPlatforms->last();
         $this->info("Max price = {$max['price']} from {$max['name']} platform");
         $this->info("Min price = {$min['price']} from {$min['name']} platform");
     }
