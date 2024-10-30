@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\CryptoAnalyticsService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(WhitebitPriceService::class, function ($app) {
             return new WhitebitPriceService();
+        });
+        $this->app->bind(CryptoAnalyticsService::class, function ($app) {
+            return new CryptoAnalyticsService();
         });
     }
 

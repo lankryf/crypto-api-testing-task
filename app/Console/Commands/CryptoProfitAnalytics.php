@@ -2,33 +2,29 @@
 
 namespace App\Console\Commands;
 
-use Exception;
-use Illuminate\Console\Command;
-
-// Services
 use App\Services\CryptoAnalyticsService;
 use App\Services\CryptoPlatforms\BinancePriceService;
 use App\Services\CryptoPlatforms\BybitPriceService;
 use App\Services\CryptoPlatforms\JbexPriceService;
 use App\Services\CryptoPlatforms\PoloniexPriceService;
 use App\Services\CryptoPlatforms\WhitebitPriceService;
+use Illuminate\Console\Command;
 
-
-class CryptoAnalytics extends Command
+class CryptoProfitAnalytics extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:crypto-analytics {inCurrency} {outCurrency}';
+    protected $signature = 'app:crypto-profit-analytics {platform} {inCurrency} {outCurrency}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Analytics cryptocurrency data (gets min and max values of currency pairs)';
+    protected $description = 'Analytics cryptocurrency profit from buying in one platform in selling in all other platforms';
 
     /**
      * Execute the console command.
@@ -57,10 +53,12 @@ class CryptoAnalytics extends Command
             $this->argument('inCurrency'),
             $this->argument('outCurrency')
         );
-        $sortedPricesFromPlatforms = $prices->sortByDesc('price');
-        $min = $sortedPricesFromPlatforms->first();
-        $max = $sortedPricesFromPlatforms->last();
-        $this->info("Max price = {$max['price']} from {$max['name']} platform");
-        $this->info("Min price = {$min['price']} from {$min['name']} platform");
+        $buyPrice = $prices->where('name', $this->argument('platform'))->first();
+        $sellPrices = $prices->where('name', '!=', $this->argument('platform'))->all();
+        $this->info("Buying from {$buyPrice['name']} with price {$buyPrice['price']}");
+        foreach ($sellPrices as $sellPrice) {
+            $profit = $sellPrice['price'] - $buyPrice['price'];
+            $this->info("Selling in {$sellPrice['name']} with price {$sellPrice['price']} => profit $profit {$this->argument('outCurrency')}}");
+        }
     }
 }
