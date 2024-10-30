@@ -58,7 +58,7 @@ class CryptoProfitAnalytics extends Command
 
         $profitPairs = $cryptoAnalyticsService->getAllPairsProfit($buyService, $sellService);
         foreach ($profitPairs as $pair) {
-            $this->info("For pair \"{$pair['symbol']}\" profit={$pair['profit']}");
+            $this->info("For pair \"{$pair['symbol']}\" profit={$pair['profit']} %");
         }
     }
 }

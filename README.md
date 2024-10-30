@@ -18,22 +18,18 @@ Min price = 71944.3 from bybit platform
 ```
 
 ## Crypto Profit Analytics
-`php artisan app:crypto-profit-analytics binance jbex`
+`php artisan app:crypto-profit-analytics binance poloniex`
 
 example out
 ```
-Buying in binance -> selling in jbex
-For pair "BTCUSDT" profit=-0.1200000000099
-For pair "ETHUSDT" profit=1.3499999999999
-For pair "BNBUSDT" profit=-0.099999999999909
-For pair "XRPUSDT" profit=-9.9999999999989E-5
-For pair "TRXUSDT" profit=1.000000000001E-5
-For pair "USDCUSDT" profit=0
-For pair "DOGEUSDT" profit=-1.000000000001E-5
-For pair "DAIUSDT" profit=-0.0181
-For pair "SANDUSDT" profit=0.00029999999999997
-For pair "DOTUSDT" profit=1.371
-For pair "TRBUSDT" profit=0.009999999999998
-For pair "SUSHIUSDT" profit=0
-For pair "UNIUSDT" profit=0.0079999999999991
+Buying in binance -> selling in poloniex
+For pair "ETHBTC" profit=0.079978672354026 %
+For pair "LTCBTC" profit=0.099900099900113 %
+For pair "NEOBTC" profit=1.9148936170213 %
+For pair "EOSETH" profit=6.7409144196952 %
+For pair "GASBTC" profit=-0.17921146953405 %
+For pair "BTCUSDT" profit=-0.018364582811204 %
+For pair "ETHUSDT" profit=-0.022087163308818 %
+For pair "LRCBTC" profit=-7.4285714285714 %
+For pair "QTUMBTC" profit=2.0776874435411 %
 ```
