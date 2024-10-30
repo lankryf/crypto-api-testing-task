@@ -17,7 +17,7 @@ class CryptoProfitAnalytics extends Command
      *
      * @var string
      */
-    protected $signature = 'app:crypto-profit-analytics {platform} {inCurrency} {outCurrency}';
+    protected $signature = 'app:crypto-profit-analytics {buyPlatform} {sellPlatform}';
 
     /**
      * The console command description.
@@ -38,27 +38,27 @@ class CryptoProfitAnalytics extends Command
         CryptoAnalyticsService $cryptoAnalyticsService
     )
     {
-        $this->info(
-            "Currencies pair: {$this->argument('inCurrency')}->{$this->argument('outCurrency')}"
-        );
-        $services = [
+
+        $services = collect([
             $binancePriceService,
             $bybitPriceService,
             $jbexPriceService,
             $poloniexPriceService,
             $whitebitPriceService
-        ];
-        $prices = $cryptoAnalyticsService->getPricesFromPlatformServices(
-            $services,
-            $this->argument('inCurrency'),
-            $this->argument('outCurrency')
-        );
-        $buyPrice = $prices->where('name', $this->argument('platform'))->first();
-        $sellPrices = $prices->where('name', '!=', $this->argument('platform'))->all();
-        $this->info("Buying from {$buyPrice['name']} with price {$buyPrice['price']}");
-        foreach ($sellPrices as $sellPrice) {
-            $profit = $sellPrice['price'] - $buyPrice['price'];
-            $this->info("Selling in {$sellPrice['name']} with price {$sellPrice['price']} => profit $profit {$this->argument('outCurrency')}");
+        ]);
+
+        $buyService = $services->where(function ($service){
+            return $service->getPlatformName() == $this->argument('buyPlatform');
+        })->first();
+
+        $sellService = $services->where(function ($service){
+            return $service->getPlatformName() == $this->argument('sellPlatform');
+        })->first();
+        $this->info("Buying in {$buyService->getPlatformName()} -> selling in {$sellService->getPlatformName()}");
+
+        $profitPairs = $cryptoAnalyticsService->getAllPairsProfit($buyService, $sellService);
+        foreach ($profitPairs as $pair) {
+            $this->info("For pair \"{$pair['symbol']}\" profit={$pair['profit']}");
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\CryptoPlatforms;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Exception;
 
@@ -23,5 +24,16 @@ class BinancePriceService extends CryptoPlatformService
     public static function getPlatformName(): string
     {
         return 'binance';
+    }
+
+    public static function getPairs(): Collection
+    {
+        $response = Http::get('https://api.binance.com/api/v3/ticker/price');
+
+        if ($response->successful()) {
+            return collect($response->json());
+        }
+
+        throw new Exception('Bad response from Binance');
     }
 }

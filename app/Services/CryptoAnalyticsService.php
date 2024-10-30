@@ -28,4 +28,27 @@ class CryptoAnalyticsService
         }
         return $prices;
     }
+
+    /**
+     * @param CryptoPlatformService $buyService
+     * @param CryptoPlatformService $sellService
+     * @return Collection
+     */
+    function getAllPairsProfit(CryptoPlatformService $buyService, CryptoPlatformService $sellService): Collection
+    {
+        $buyPairs = $buyService->getPairs();
+        Log::debug($buyPairs);
+        $sellPairs = $sellService->getPairs();
+        Log::debug($sellPairs);
+        return $buyPairs->map(function ($buyPair) use ($sellPairs) {
+            $sellPair = $sellPairs->firstWhere('symbol', $buyPair['symbol']);
+            if ($sellPair) {
+                return [
+                    'symbol' => $buyPair['symbol'],
+                    'profit' => $sellPair['price'] - $buyPair['price'],
+                ];
+            }
+            return null;
+        })->filter();
+    }
 }
