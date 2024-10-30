@@ -45,7 +45,7 @@ class CryptoAnalyticsService
             if ($sellPair) {
                 return [
                     'symbol' => $buyPair['symbol'],
-                    'profit' => $sellPair['price'] - $buyPair['price'],
+                    'profit' => ($sellPair['price'] - $buyPair['price']) / $buyPair['price'] * 100,
                 ];
             }
             return null;
